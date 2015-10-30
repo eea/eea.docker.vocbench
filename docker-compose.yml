@@ -1,0 +1,36 @@
+vocbench:
+  #restart: always
+  image: dockerrepo.eionet.europa.eu:5000/vocbench:2.2
+  volumes_from:
+    - appdata
+  ports:
+    - "8080:8080"
+  links:
+    - mysql:vocbenchdb
+#  environment:
+
+appdata:
+  image: busybox
+  volumes:
+  - /usr/local/tomcat/webapps
+  - /opt/semanticturkey
+
+mysql:
+  restart: always
+  image: mysql:5.7
+  volumes_from:
+  - mysqldata
+  env_file: mysql.env
+
+mysqldata:
+  image: busybox
+  volumes:
+  - /var/lib/mysql
+
+#vocbench_mysql_data:
+#image: eeacms/mysql_data
+
+
+
+
+
